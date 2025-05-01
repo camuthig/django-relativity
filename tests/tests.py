@@ -364,6 +364,29 @@ class RelationshipTests(TestCase):
         self.assertIsNone(node_3.next)
         self.assertIsNone(node_1.prev)
 
+    def test_many_to_one_exclude_forward(self):
+        qs = CartItem.objects.exclude(product__colour="red")
+
+        self.assertEqual(qs.count(), 1)
+
+    def test_single_exclude_forward(self):
+        node_1 = LinkedNode.objects.create(
+            name="first node",
+            prev_id=None,
+        )
+        node_2 = LinkedNode.objects.create(
+            name="next node",
+            prev_id=node_1.id,
+        )
+        node_3 = LinkedNode.objects.create(
+            name="last node",
+            prev_id=node_2.id,
+        )
+
+        qs = LinkedNode.objects.exclude(next__name__contains="last")
+
+        self.assertEqual(qs.count(), 2)
+
     def test_not_nullable(self):
         item = CartItem.objects.create(
             pk=4,
