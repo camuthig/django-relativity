@@ -360,6 +360,10 @@ class Relationship(models.ForeignObject):
         """
         return self.remote_field
 
+    @cached_property
+    def accessor_name(self):
+        return self.get_accessor_name()
+
     def get_accessor_name(self):
         return self.name
 

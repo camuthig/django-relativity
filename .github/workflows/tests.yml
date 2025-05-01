@@ -11,7 +11,7 @@ jobs:
           - postgres://postgres:postgres@postgres/django_relativity
           - sqlite://
           - mysql://root:mysql@mysql/django_relativity
-        django_version: ["3.2", "4.0", "4.1", "4.2"]
+        django_version: ["3.2", "4.0", "4.1", "4.2", "5.0", "5.1", "5.2"]
         python_version: ["3.8", "3.9", "3.10", "3.11"]
         include:
           - {django_version: "3.2", python_version: "3.6", database_url: "postgres://postgres:postgres@postgres/django_relativity"}
@@ -23,6 +23,12 @@ jobs:
         exclude:
           - {django_version: "3.2", python_version: "3.11"}
           - {django_version: "4.0", python_version: "3.11"}
+          - {django_version: "5.0", python_version: "3.8"}
+          - {django_version: "5.0", python_version: "3.9"}
+          - {django_version: "5.1", python_version: "3.8"}
+          - {django_version: "5.1", python_version: "3.9"}
+          - {django_version: "5.2", python_version: "3.8"}
+          - {django_version: "5.2", python_version: "3.9"}
     runs-on: ubuntu-latest
     container: python:${{ matrix.python_version }}
     steps:
